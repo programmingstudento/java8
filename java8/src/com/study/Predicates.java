@@ -16,7 +16,7 @@ public class Predicates {
 		filters(languages, word -> word.length() > 2).forEach(System.out::println);
 		languages.stream().map(String::length).forEach(System.out::println);
 
-		List<Student> students = new ArrayList<>(Arrays.asList(new Student(21, "One"), new Student(22, "Two"),
+		List<Student> students = new ArrayList<>(Arrays.asList(new Student(21, "One"), new Student(21, "Two"),
 				new Student(23, "Three"), new Student(24, "Four")));
 
 		Function<Integer, Student> first = Student::new;
@@ -24,6 +24,12 @@ public class Predicates {
 		BiFunction<Integer, String, Student> second = Student::new;
 		students.add(second.apply(25, "Five"));
 		System.out.println(students);
+		
+		Function<String,String> upperCase = String::toUpperCase;
+		Function<String,String> trim = String::trim;
+		Function<String,String> result = upperCase.andThen(trim);
+		System.out.println(result.apply("java "));
+
 	}
 
 	public static <T> List<T> filters(List<T> list, Predicate<T> predicate) {
