@@ -47,5 +47,10 @@ public class Assignment {
 		// lowest value in business
 		int lowestValue = business.stream().map(Business::getValue).reduce(Integer.MAX_VALUE, Integer::min);
 		System.out.println("Lowest value : " + lowestValue);
+
+		int totalCalories = Food.foods().stream().mapToInt(Food::getCalories).sum();
+		System.out.format("Total Calories in foods is %d", new Object[] { totalCalories });
+		Food.foods().stream().mapToInt(Food::getCalories).max()
+				.ifPresent(n -> System.out.println("Max Calorie : " + n));
 	}
 }

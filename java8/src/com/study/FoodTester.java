@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FoodTester {
@@ -62,5 +63,19 @@ public class FoodTester {
 
 		int max1 = Food.foods().stream().collect(Collectors.reducing(0, Food::getCalories, (a, b) -> a < b ? b : a));
 		System.out.println(max1);
+
+		Map<Type, List<Food>> types = Food.foods().stream().collect(Collectors.groupingBy(Food::getType));
+		System.out.println(types);
+
+		Map<Type, Map<Diet, List<Food>>> ones = Food.foods().stream()
+				.collect(Collectors.groupingBy(Food::getType, Collectors.groupingBy(food -> {
+					if (food.getCalories() < 400) {
+						return Diet.HEALTHY;
+					} else if (food.getCalories() < 700) {
+						return Diet.OK;
+					}
+					return Diet.BAD;
+				})));
+		System.out.println(ones);
 	}
 }
