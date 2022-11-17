@@ -1,6 +1,8 @@
 package com.study;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,5 +39,28 @@ public class FoodTester {
 		// number of dishes
 		Food.foods().stream().map(food -> 1).reduce(Integer::sum)
 				.ifPresent(number -> System.out.println("Number of foods : " + number));
+
+		long foodCount = Food.foods().stream().collect(Collectors.counting());
+		System.out.println("Food Count : " + foodCount);
+
+		Comparator<Food> fooComparator = Comparator.comparing(Food::getCalories);
+		Food.foods().stream().collect(Collectors.maxBy(fooComparator)).ifPresent(System.out::println);
+
+		int totalCalories = Food.foods().stream().collect(Collectors.summingInt(Food::getCalories));
+		System.out.println(totalCalories);
+		double averageCalories = Food.foods().stream().collect(Collectors.averagingInt(Food::getCalories));
+		System.out.println(averageCalories);
+
+		IntSummaryStatistics statistics = Food.foods().stream().collect(Collectors.summarizingInt(Food::getCalories));
+		System.out.println(statistics);
+
+		Food.foods().stream().collect(Collectors.minBy(fooComparator)).ifPresent(System.out::println);
+		System.out.println(Food.foods().stream().map(Food::getName).collect(Collectors.joining(",")));
+
+		int total1 = Food.foods().stream().collect(Collectors.reducing(0, Food::getCalories, (one, two) -> one + two));
+		System.out.println(total1);
+
+		int max1 = Food.foods().stream().collect(Collectors.reducing(0, Food::getCalories, (a, b) -> a < b ? b : a));
+		System.out.println(max1);
 	}
 }
