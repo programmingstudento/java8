@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodTester {
@@ -77,5 +78,16 @@ public class FoodTester {
 					return Diet.BAD;
 				})));
 		System.out.println(ones);
+
+		System.out.println(Food.foods().stream().collect(Collectors.groupingBy(Food::getType, Collectors.counting())));
+
+		Map<Type, Optional<Food>> sample = Food.foods().stream()
+				.collect(Collectors.groupingBy(Food::getType, Collectors.maxBy(fooComparator)));
+		System.out.println(sample);
+
+		Map<Boolean, List<Food>> vegFoods = Food.foods().stream()
+				.collect(Collectors.partitioningBy(Food::isVegetarian));
+		System.out.println(vegFoods.get(false) + "  " + Boolean.valueOf(true));
+
 	}
 }
