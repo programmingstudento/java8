@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
@@ -33,5 +34,9 @@ public class DateLearn {
 		System.out.println(one);
 
 		ZoneId.getAvailableZoneIds().forEach(System.out::println);
+
+		System.out.println(LocalDateTime.now(ZoneId.of("US/Central")));
+		JapaneseDate japaneseDate = JapaneseDate.now(ZoneId.of("US/Central"));
+		System.out.println(japaneseDate);
 	}
 }
