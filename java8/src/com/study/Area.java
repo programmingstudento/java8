@@ -1,8 +1,15 @@
 package com.study;
 
+import java.util.function.IntUnaryOperator;
 import java.util.function.ToDoubleFunction;
 
 public class Area {
+	
+	public static IntUnaryOperator create(int addTo) {
+	     IntUnaryOperator one= value -> value + addTo;
+	      return one;
+	  }
+	
 	public static final ToDoubleFunction<Triangle> AREA = triangle -> {
 		double area = triangle.getBase() * triangle.getHeight() * .5;
 		triangle.setArea(area);
@@ -18,7 +25,7 @@ public class Area {
 }
 
 class Triangle {
-
+   
 	private final int height = 10;
 	private final int base = 5;
 	private double area;
