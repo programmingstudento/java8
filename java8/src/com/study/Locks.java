@@ -44,5 +44,20 @@ public class Locks {
 			e.printStackTrace();
 		}
 		System.out.println("Count : " + count.getCount());
+
+		Calculator calculator1 = new Calculator(51, Operation.ADDITION),
+				calculator2 = new Calculator(51, Operation.SUBTRACTION),
+				calculator3 = new Calculator(51, Operation.MULTIPLICATION),
+				calculator4 = new Calculator(511, Operation.DIVISION);
+
+		Calculator[] one = { calculator1, calculator2, calculator3, calculator4 };
+		Thread thread3 = new Thread(() -> {
+			calculator1.calculate(one);
+		});
+		Thread thread4 = new Thread(() -> {
+			calculator1.calculate(one);
+		});
+		thread3.start();
+		thread4.start();
 	}
 }
