@@ -19,6 +19,18 @@ public class ExampleOne {
 			e.printStackTrace();
 		}
 		System.out.println(countOne.getCounter());
+		CinemaTicket cinemaTicket = new CinemaTicket();
+		thread1 = new Thread(() -> cinemaTicket.bookTicket("Java", 10));
+		thread2 = new Thread(() -> cinemaTicket.bookTicket("Java", 4));
+		thread1.start();
+		thread2.start();
+		try {
+			thread1.join();
+			thread2.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
