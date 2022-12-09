@@ -2,6 +2,8 @@ package com.core.java;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Test {
 
@@ -48,5 +50,19 @@ public class Test {
 
 	private static void displayNanoSeconds(long nanoSeconds) {
 		System.out.printf("Time taken : %d nanoseconds.%n%n", nanoSeconds);
+	}
+
+	public static String showSequence(int value) {
+		if (value < 0) {
+			return value + "<0";
+		} else if (value == 0) {
+			return "0=0";
+		} else {
+			String string = IntStream.rangeClosed(0, value)
+					.mapToObj(num -> num == value ? String.valueOf(num) : String.valueOf(num + ""))
+					.collect(Collectors.joining());
+			int total = IntStream.rangeClosed(0, value).sum();
+			return String.format("%s = %d", string, total);
+		}
 	}
 }
