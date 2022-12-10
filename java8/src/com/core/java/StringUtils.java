@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public final class StringUtils {
 
 	private StringUtils() {
-
+		super();
 	}
 
 	/**
