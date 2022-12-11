@@ -2,8 +2,10 @@ package com.core.java;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.function.Function;
 
-public class TestingTime {
+public class TestingTime<T, I> {
 
 	public static void main(String[] args) {
 		String word = "JAVA";
@@ -50,4 +52,7 @@ public class TestingTime {
 		System.out.printf("Time taken : %d nanoseconds.%n%n", nanoSeconds);
 	}
 
+	public List<I> bind(List<T> list, Function<T, List<I>> func) {
+		return list.stream().map(t -> func.apply(t)).flatMap(t -> t.stream()).toList();
+	}
 }
