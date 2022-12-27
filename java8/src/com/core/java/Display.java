@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 public class Display {
 
 	public static void main(String[] args) {
-		final String[] languages = { "Java", "SQL", "Python", "Javascript", "Scala", "Typesciprt", "C#", "C++",
+		Display display = new Display();
+		final String[] languages = { "Java", "SQL", "Python", "Javascript", "Scala", "Typescript", "C#", "C++",
 				"Haskell", "C" };
 		int size = languages.length;
 		// style 1
@@ -54,5 +55,24 @@ public class Display {
 		// counting number of languages that start with consonant.
 		long count = Stream.of(languages).filter(consonantStart.negate()).count();
 		System.out.format("The vowel start language count is : %d%n", count);
+
+		System.out.println(display.firstEndsWithVowel(languages));
+		System.out.println(display.firstLongestWord1(languages2));
+		System.out.println(display.firstLongestWord2(languages2));
+
+	}
+
+	public String firstEndsWithVowel(final String[] languages) {
+		return Stream.of(languages).filter(language -> language.matches("^[a-zA-Z]+[aeiou]$")).findFirst()
+				.orElse("Not found");
+	}
+
+	public String firstLongestWord1(final String[] languages) {
+		final int size = Stream.of(languages).mapToInt(String::length).max().getAsInt();
+		return Stream.of(languages).filter(language -> language.length() == size).findFirst().orElse("Not Found");
+	}
+
+	public String firstLongestWord2(final String[] languages) {
+		return Stream.of(languages).reduce((one, two) -> one.length() >= two.length() ? one : two).orElse("Not Found");
 	}
 }
