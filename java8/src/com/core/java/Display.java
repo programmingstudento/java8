@@ -1,12 +1,23 @@
 package com.core.java;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Display {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Display display = new Display();
 		final String[] languages = { "Java", "SQL", "Python", "Javascript", "Scala", "Typescript", "C#", "C++",
 				"Haskell", "C" };
@@ -59,6 +70,51 @@ public class Display {
 		System.out.println(display.firstEndsWithVowel(languages));
 		System.out.println(display.firstLongestWord1(languages2));
 		System.out.println(display.firstLongestWord2(languages2));
+
+		"Java1Python2C#3".chars().filter(number -> number % 2 == 0).forEach(System.out::println);
+
+		final List<Clerk> clerks = new ArrayList<>();
+		clerks.add(new Clerk("Rama", 28));
+		clerks.add(new Clerk("Sita", 25));
+		clerks.add(new Clerk("Rita", 25));
+		clerks.add(new Clerk("Karishma", 31));
+
+		System.out.println();
+		System.out.println(clerks);
+		Comparator<Clerk> sortByAscendingAge = (clerk1, clerk2) -> Integer.compare(clerk1.getAge(), clerk2.getAge());
+		clerks.stream().sorted(sortByAscendingAge).forEach(System.out::println);
+		System.out.println(clerks);
+		System.out.println();
+
+		Comparator<Clerk> sortByDescendingAge = sortByAscendingAge.reversed();
+		Comparator<Clerk> sortByNameAscending = (clerk1, clerk2) -> clerk1.getName().compareTo(clerk2.getName());
+		clerks.stream().sorted(sortByDescendingAge).findFirst()
+				.ifPresent((final Clerk clerk) -> System.out.format("The Oldest Clerk is %s", clerk));
+		System.out.println();
+
+		clerks.stream().sorted(sortByDescendingAge.thenComparing(sortByNameAscending)).forEach(System.out::println);
+		System.out.println();
+
+		final Function<Clerk, Integer> ageComparing = clerk -> clerk.getAge();
+		clerks.stream().sorted(Comparator.comparing(ageComparing)).forEach(System.out::println);
+		System.out.println();
+
+		List<Clerk> clerkNameLengthGreaterThan4 = clerks.stream()
+				.filter((final Clerk clerk) -> clerk.getName().length() > 4).collect(Collectors.toList());
+		System.out.println(clerkNameLengthGreaterThan4);
+		Map<Integer, List<Clerk>> clerkMap = clerks.stream().collect(Collectors.groupingBy(Clerk::getAge));
+		System.out.println(clerkMap);
+		clerks.stream()
+				.collect(Collectors.groupingBy(clerk -> clerk.getName().subSequence(0, 1),
+						Collectors.reducing(BinaryOperator.minBy(sortByAscendingAge))))
+				.forEach((t, u) -> System.out.println(t + ":" + u.get()));
+
+		System.out.println();
+		Files.list(Paths.get("D:\\")).forEach(System.out::println);
+
+		System.out.println();
+		Files.list(Paths.get("D:\\")).filter(file -> Files.isDirectory(file, new LinkOption[] {}))
+				.forEach(System.out::println);
 
 	}
 
