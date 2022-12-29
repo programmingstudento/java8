@@ -116,6 +116,20 @@ public class Display {
 		Files.list(Paths.get("D:\\")).filter(file -> Files.isDirectory(file, new LinkOption[] {}))
 				.forEach(System.out::println);
 
+		final List<Person> one = Arrays.asList(new Person(24, Classification.SENIOR),
+				new Person(22, Classification.JUNIOR), new Person(21, Classification.SOPHOMORE),
+				new Person(19, Classification.FRESHMAN), new Person(18, Classification.FRESHMAN),
+				new Person(27, Classification.SENIOR));
+
+		final Predicate<Person> freshman = person -> person.getClassification() == Classification.FRESHMAN;
+		final Predicate<Person> sophomore = person -> person.getClassification() == Classification.SOPHOMORE;
+		
+		System.out.println(addAge(sophomore, one));
+		System.out.println(addAge(freshman, one));
+	}
+
+	public static int addAge(Predicate<Person> personFilter, List<Person> persons) {
+		return persons.stream().filter(personFilter).mapToInt(Person::getAge).sum();
 	}
 
 	public String firstEndsWithVowel(final String[] languages) {
@@ -131,4 +145,5 @@ public class Display {
 	public String firstLongestWord2(final String[] languages) {
 		return Stream.of(languages).reduce((one, two) -> one.length() >= two.length() ? one : two).orElse("Not Found");
 	}
+
 }
