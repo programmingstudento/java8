@@ -128,7 +128,7 @@ public class Display {
 		System.out.println(addAge(freshman, one));
 	}
 
-	public static int addAge(Predicate<Person> personFilter, List<Person> persons) {
+	public static int addAge(final Predicate<Person> personFilter,final List<Person> persons) {
 		return persons.stream().filter(personFilter).mapToInt(Person::getAge).sum();
 	}
 
